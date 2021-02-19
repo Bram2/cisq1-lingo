@@ -24,7 +24,8 @@
 
 
   Scenario Outline: Guessing a word
-    Given a "<word>" to guess
+    Given I am playing a game
+    And the word to guess is "<word>"
     When I try to "<Guess>" the word
     Then I expect to receive "<feedback>" with a "<shown hint>"
 

@@ -1,17 +1,23 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackException;
+
 import java.util.List;
 import java.util.Objects;
 
 
 public class Feedback {
 
-    private String attempt;
-    private List<Mark> marks;
+    private final String attempt;
+    private final List<Mark> marks;
 
     public Feedback(String attempt, List<Mark> marks) {
         this.attempt = attempt;
         this.marks = marks;
+
+        if(marks.size() != attempt.length())
+            throw new InvalidFeedbackException();
+
     }
 
     public boolean wordIsGuessed(){

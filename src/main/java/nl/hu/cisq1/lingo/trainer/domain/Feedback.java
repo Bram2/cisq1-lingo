@@ -24,6 +24,8 @@ public class Feedback {
     }
 
     public List<String> giveHint(List<String> previousHint, String word){
+        if(word.length() != previousHint.size())
+            throw new InvalidFeedbackException();
 
         for(int i = 0; i < word.length(); i++)
             if((marks.get(i) == Mark.CORRECT) || (!previousHint.get(i).equals(".")))

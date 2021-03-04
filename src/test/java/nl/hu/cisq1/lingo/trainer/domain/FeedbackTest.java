@@ -67,7 +67,19 @@ class FeedbackTest {
                 Arguments.of("BAARD", "BARST", List.of(CORRECT, CORRECT, PRESENT, ABSENT, ABSENT), List.of("B",".",".",".","."), List.of("B","A",".",".",".")),
                 Arguments.of("BAARD", "DRAAD", List.of(ABSENT, PRESENT, CORRECT, PRESENT, CORRECT), List.of("B","A",".",".","."), List.of("B","A","A",".","D")),
                 Arguments.of("WATER", "BAARD", List.of(ABSENT, CORRECT, ABSENT, PRESENT, ABSENT), List.of("W",".",".",".","."), List.of("W","A",".",".",".")),
-                Arguments.of("WATER", "WAGEN", List.of(CORRECT, CORRECT, ABSENT, CORRECT, ABSENT), List.of("W",".",".",".","."), List.of("W","A",".","E","."))
+                Arguments.of("WATER", "WAGEN", List.of(CORRECT, CORRECT, ABSENT, CORRECT, ABSENT), List.of("W",".",".",".","."), List.of("W","A",".","E",".")),
+                Arguments.of("WATER", "WAGEN", List.of(CORRECT, CORRECT, ABSENT, CORRECT, ABSENT), List.of("W",".","T",".","."), List.of("W","A","T","E","."))
+        );
+    }
+
+    @Test
+    @DisplayName("throw exception if previoushint size is not equal to word length")
+    void invalidHintTest(){
+
+        Feedback feedback = new Feedback("WAGEN", List.of(CORRECT, CORRECT, ABSENT, CORRECT, ABSENT));
+
+        assertThrows(InvalidFeedbackException.class,
+                () -> feedback.giveHint(List.of("W",".","T","."), "WATER")
         );
     }
 

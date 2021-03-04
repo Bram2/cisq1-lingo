@@ -2,6 +2,8 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,6 +12,7 @@ public class Feedback {
 
     private final String attempt;
     private final List<Mark> marks;
+    private List<String> hint = new ArrayList<>();
 
     public Feedback(String attempt, List<Mark> marks) {
         this.attempt = attempt;
@@ -18,6 +21,17 @@ public class Feedback {
         if(marks.size() != attempt.length())
             throw new InvalidFeedbackException();
 
+    }
+
+    public List<String> giveHint(List<String> previousHint, String word){
+
+        for(int i = 0; i < word.length(); i++)
+            if((marks.get(i) == Mark.CORRECT) || (!previousHint.get(i).equals(".")))
+                this.hint.add(word.substring(i, i+1));
+            else
+                this.hint.add(".");
+
+        return hint;
     }
 
     public boolean wordIsGuessed(){

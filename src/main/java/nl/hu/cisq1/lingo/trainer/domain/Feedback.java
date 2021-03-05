@@ -59,15 +59,21 @@ public class Feedback {
         return marks;
     }
 
+    public List<String> getHint() {
+        return hint;
+    }
+
     public List<String> giveHint(List<String> previousHint, String word){
         if(word.length() != previousHint.size())
             throw new InvalidFeedbackException();
 
-        for(int i = 0; i < word.length(); i++)
-            if((marks.get(i) == CORRECT) || (!previousHint.get(i).equals(".")))
-                this.hint.add(word.substring(i, i+1));
-            else
-                this.hint.add(".");
+        if(hint.isEmpty()) {
+            for (int i = 0; i < word.length(); i++)
+                if ((marks.get(i) == CORRECT) || (!previousHint.get(i).equals(".")))
+                    this.hint.add(word.substring(i, i + 1));
+                else
+                    this.hint.add(".");
+        }
 
         return hint;
     }

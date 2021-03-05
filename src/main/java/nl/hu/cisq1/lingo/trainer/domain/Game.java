@@ -7,6 +7,7 @@ public class Game {
 
     private int id;
     private boolean ongoing;
+    private double score;
 
     private List<Round> rounds = new ArrayList<>();
 

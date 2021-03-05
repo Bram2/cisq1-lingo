@@ -84,6 +84,15 @@ class FeedbackTest {
         );
     }
 
+    @Test
+    @DisplayName("throw exception if the attempt length is not the same as the word length")
+    void invalidAttemptLength(){
+
+        assertThrows(InvalidFeedbackException.class,
+                () -> Feedback.create("WATER", "WATERE")
+        );
+    }
+
 
 
 

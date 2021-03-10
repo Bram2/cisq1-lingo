@@ -55,10 +55,6 @@ public class Feedback {
         return new Feedback(attempt, markList);
     }
 
-    public List<Mark> getMarks() {
-        return marks;
-    }
-
     public List<String> getHint() {
         return hint;
     }

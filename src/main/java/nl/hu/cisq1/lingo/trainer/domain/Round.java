@@ -7,17 +7,27 @@ import java.util.List;
 
 public class Round {
 
-    private int id;
     private final Word word;
     private final List<Feedback> feedback = new ArrayList<>();
+    public boolean roundDone = false;
 
     public Round(Word word){
         this.word = word;
     }
 
     public void guess(String attempt){
+        if(feedback.size() <5 && !roundDone) {
+            Feedback newFeedback = Feedback.create(word.getValue(), attempt);
 
-        feedback.add(Feedback.create(word.getValue(), attempt));
+            if(newFeedback.wordIsGuessed())
+                roundDone = true;
+
+            feedback.add(newFeedback);
+            giveHint();
+        }
+        else
+            throw new RuntimeException("Round is done");
+
     }
 
     public List<String> giveHint(){
@@ -35,7 +45,6 @@ public class Round {
         }else
             return feedback.get(feedback.size() - 1).giveHint(feedback.get(feedback.size() - 2).getHint(), word.getValue());
     }
-
 
     public List<Feedback> getFeedback() {
         return feedback;

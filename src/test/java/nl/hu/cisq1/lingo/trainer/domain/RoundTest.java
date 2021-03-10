@@ -3,6 +3,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import java.util.List;
 
@@ -42,13 +43,33 @@ class RoundTest {
         Round round = new Round(new Word("WOORD"));
 
         round.guess("WOZEN");
-        System.out.println(round.giveHint());
         round.guess("WERED");
-        System.out.println(round.giveHint());
-
-        System.out.println(round.getFeedback());
 
         assertEquals(List.of("W", "O", ".", ".", "D"), round.giveHint());
     }
+
+    @Test
+    @DisplayName("throw exception if there is an attempt after the word has already been guessed")
+    void wordGuessedAttempt(){
+        Round round = new Round(new Word("WOORD"));
+        round.guess("WOORD");
+
+        assertThrows(RuntimeException.class, () -> round.guess("WOORD"));
+    }
+
+    @Test
+    @DisplayName("round is done after 5 guesses")
+    void tooManyGuesses(){
+        Round round = new Round(new Word("WOORD"));
+
+        round.guess("WOZEN");
+        round.guess("WERED");
+        round.guess("WATER");
+        round.guess("WEZEN");
+        round.guess("WEVEN");
+
+        assertThrows(RuntimeException.class, ()-> round.guess("WOORD"));
+    }
+
 
 }

@@ -19,8 +19,18 @@ class GameTest {
     }
 
     @Test
-    @DisplayName("Guess is invalid if the round is done")
-    void roundIsDoneGuess(){
+    @DisplayName("Round is done after the word is guessed")
+    void wordGuessed(){
+        Game game = new Game("WOORD");
+
+        game.guess("WOORD");
+
+        assertEquals(game.getGameState(), GameState.WAITING_FOR_ROUND);
+    }
+
+    @Test
+    @DisplayName("Player is eliminated after 5 wrong guesses")
+    void playerEliminated(){
         Game game = new Game("WOORD");
 
         game.guess("PAARD");
@@ -29,9 +39,49 @@ class GameTest {
         game.guess("PAARD");
         game.guess("PAARD");
 
-        assertThrows(RuntimeException.class, () -> game.guess("PAARD"));
+        assertEquals(game.getGameState(), GameState.ELIMINATED);
     }
 
+    @Test
+    @DisplayName("Score is added when a word is guessed")
+    void scoreAdded(){
+        Game game = new Game("WOORD");
 
+        game.guess("WAARD");
+        game.guess("WOORD");
+
+        assertEquals(game.getScore(), 20);
+    }
+
+    @Test
+    @DisplayName("Throw an exception if a guess is made in an invalid gamestate")
+    void notPlayingGuess(){
+        Game game = new Game("WOORD");
+
+        game.guess("WOORD");
+
+        assertThrows(RuntimeException.class, () -> game.guess("BAARD"));
+
+    }
+
+    @Test
+    @DisplayName("Not allowed to start a new round when still playing")
+    void stillPlayingNewRound(){
+        Game game = new Game("WOORD");
+
+        assertThrows(RuntimeException.class, () -> game.startRound("BAARD"));
+    }
+
+    @Test
+    @DisplayName("Create a new round after a word has been guessed")
+    void createNewRound(){
+        Game game = new Game("WOORD");
+        game.guess("WOORD");
+
+        game.startRound("BAARD");
+
+        assertEquals(game.getRounds().size(), 2);
+
+    }
 
 }

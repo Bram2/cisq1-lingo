@@ -2,6 +2,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 public enum GameState {
 
-    ONGOING,
-    ELIMINATED
+    PLAYING,
+    ELIMINATED,
+    WAITING_FOR_ROUND
 }

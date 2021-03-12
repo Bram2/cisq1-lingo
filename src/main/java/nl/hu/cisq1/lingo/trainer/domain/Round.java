@@ -1,7 +1,5 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.words.domain.Word;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,18 +7,18 @@ public class Round {
 
     private final String word;
     private final List<Feedback> feedback = new ArrayList<>();
-    public boolean roundDone = false;
+    public boolean wordGuessed = false;
 
     public Round(String word){
         this.word = word;
     }
 
     public void guess(String attempt){
-        if(feedback.size() <5 && !roundDone) {
+        if(feedback.size() < 5 && !wordGuessed) {
             Feedback newFeedback = Feedback.create(word, attempt);
 
             if(newFeedback.wordIsGuessed())
-                roundDone = true;
+                wordGuessed = true;
 
             feedback.add(newFeedback);
             giveHint();
@@ -48,5 +46,9 @@ public class Round {
 
     public List<Feedback> getFeedback() {
         return feedback;
+    }
+
+    public String getWord() {
+        return word;
     }
 }

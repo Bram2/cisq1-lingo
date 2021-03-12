@@ -12,31 +12,48 @@ public class Game {
 
     public Game(String word){
         this.rounds.add((new Round(word)));
-        gameState = GameState.ONGOING;
+        gameState = GameState.PLAYING;
     }
 
-
-    //TODO: feedback returnen
     public void guess(String attempt){
+
+        if(gameState != GameState.PLAYING)
+            throw new RuntimeException("Currently not playing a round.");
 
         Round round = rounds.get(rounds.size() - 1);
 
-        if(round.roundDone)
-           throw new RuntimeException("Invalid guess. Round is done.");
-
         round.guess(attempt);
+
+        if(round.wordGuessed) {
+            gameState = GameState.WAITING_FOR_ROUND;
+            score = score + (5 * (5 - round.getFeedback().size()) + 5);
+        }
+        else if(round.getFeedback().size() >= 5)
+            gameState = GameState.ELIMINATED;
+
     }
 
     public void startRound(String word){
-        Round round = rounds.get(rounds.size() - 1);
-
-        if(!round.roundDone)
-            throw new RuntimeException("Previous round is still going!");
+        if(gameState != GameState.WAITING_FOR_ROUND)
+            throw new RuntimeException("Not allowed to start a new round.");
 
         this.rounds.add((new Round(word)));
+        gameState = GameState.PLAYING;
     }
 
     public List<Round> getRounds() {
         return rounds;
+    }
+
+    public int getWordLength(){
+        return rounds.get(rounds.size() - 1).getWord().length();
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public double getScore() {
+        return score;
     }
 }

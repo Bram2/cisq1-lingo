@@ -4,9 +4,13 @@ import nl.hu.cisq1.lingo.words.domain.Word;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
+import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoundTest {
@@ -55,6 +59,27 @@ class RoundTest {
         round.guess("WOORD");
 
         assertThrows(RuntimeException.class, () -> round.guess("WOORD"));
+    }
+
+    @ParameterizedTest
+    @MethodSource("guessExamples")
+    @DisplayName("A guess returns correct feedback")
+    void correctHint(String guess, List<Mark> marks){
+        Round round = new Round("WATER");
+        round.guess(guess);
+
+        assertEquals(marks, round.getFeedback().get(0).getMarks());
+    }
+
+    static Stream<Arguments> guessExamples(){
+        return Stream.of(
+                Arguments.of("AWTER", List.of(PRESENT, PRESENT, CORRECT, CORRECT, CORRECT)),
+                Arguments.of("AAAWW",List.of(ABSENT, CORRECT, ABSENT, PRESENT, ABSENT)),
+                Arguments.of("ARRAA",List.of(PRESENT, PRESENT, ABSENT, ABSENT, ABSENT)),
+                Arguments.of("HOOFD", List.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT)),
+                Arguments.of("WATEW",  List.of(CORRECT, CORRECT, CORRECT, CORRECT, ABSENT)),
+                Arguments.of("AAAAE", List.of(ABSENT, CORRECT, ABSENT, ABSENT, PRESENT))
+        );
     }
 
     @Test

@@ -36,7 +36,7 @@ public class Round {
             for(int i = 1; i < word.length(); i++)
                 firstHint.add(".");
 
-            if(feedback.size() == 0)
+            if(feedback.isEmpty())
                 return firstHint;
             else
                 return feedback.get(0).giveHint(firstHint, word);

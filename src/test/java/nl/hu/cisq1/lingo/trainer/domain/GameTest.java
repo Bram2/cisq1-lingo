@@ -15,7 +15,7 @@ class GameTest {
     void firstRoundCreated(){
         Game game = new Game("WOORD");
 
-        assertEquals(game.getRounds().size(), 1);
+        assertEquals(1, game.getRounds().size());
     }
 
     @Test
@@ -25,7 +25,7 @@ class GameTest {
 
         game.guess("WOORD");
 
-        assertEquals(game.getGameState(), GameState.WAITING_FOR_ROUND);
+        assertEquals(GameState.WAITING_FOR_ROUND, game.getGameState());
     }
 
     @Test
@@ -39,7 +39,7 @@ class GameTest {
         game.guess("PAARD");
         game.guess("PAARD");
 
-        assertEquals(game.getGameState(), GameState.ELIMINATED);
+        assertEquals(GameState.ELIMINATED, game.getGameState());
     }
 
     @Test
@@ -50,7 +50,7 @@ class GameTest {
         game.guess("WAARD");
         game.guess("WOORD");
 
-        assertEquals(game.getScore(), 20);
+        assertEquals(20, game.getScore());
     }
 
     @Test
@@ -80,7 +80,7 @@ class GameTest {
 
         game.startRound("BAARD");
 
-        assertEquals(game.getRounds().size(), 2);
+        assertEquals(2, game.getRounds().size());
 
     }
 

@@ -2,16 +2,28 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackException;
 
+import javax.persistence.*;
 import java.util.*;
 
 import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
 
-
+@Entity
 public class Feedback {
 
-    private final String attempt;
-    private final List<Mark> marks;
+    @Id
+    @GeneratedValue
+    private int id;
+
+    private String attempt;
+
+    @Enumerated
+    @ElementCollection
+    private List<Mark> marks;
+
+    @ElementCollection
     private final List<String> hint = new ArrayList<>();
+
+    public Feedback(){}
 
     public Feedback(String attempt, List<Mark> marks) {
         this.attempt = attempt;

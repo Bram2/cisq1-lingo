@@ -1,14 +1,28 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Game {
+
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     private GameState gameState;
     private double score;
 
+    @OneToMany
     private final List<Round> rounds = new ArrayList<>();
+
+
+    public Game(){}
 
     public Game(String word){
         this.rounds.add((new Round(word)));

@@ -16,7 +16,7 @@ public class Game {
     private int id;
 
     private GameState gameState;
-    private double score;
+    private int score;
 
     @OneToMany
     private final List<Round> rounds = new ArrayList<>();
@@ -67,7 +67,15 @@ public class Game {
         return gameState;
     }
 
-    public double getScore() {
+    public int getScore() {
         return score;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Round getLastRound(){
+        return rounds.get(rounds.size() - 1);
     }
 }

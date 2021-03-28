@@ -19,4 +19,28 @@ public class Progress {
         this.gameState = gameState;
         this.roundNumber = roundNumber;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+
+    public List<Mark> getFeedback() {
+        return feedback;
+    }
+
+    public List<String> getLastHint() {
+        return lastHint;
+    }
 }

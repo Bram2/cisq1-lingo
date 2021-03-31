@@ -1,9 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +13,7 @@ public class Round {
 
     private String word;
 
-    @OneToMany
+    @OneToMany(cascade= CascadeType.ALL)
     private final List<Feedback> feedback = new ArrayList<>();
 
     public boolean wordGuessed = false;

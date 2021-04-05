@@ -82,4 +82,35 @@ class GameServiceTest {
         assertEquals(2, progress.getRoundNumber());
     }
 
+    @Test
+    @DisplayName("Cant start a round when current round isnt done")
+    void startRoundError(){
+
+        WordService wordService = mock(WordService.class);
+        GameRepository gameRepository = mock(GameRepository.class);
+        GameService gameService = new GameService(gameRepository,wordService);
+
+        Game game = new Game("WOORD");
+
+        when(gameRepository.getGameById(anyInt())).thenReturn(Optional.of(game));
+
+        assertThrows(RuntimeException.class, () -> gameService.newRound(1));
+    }
+
+    @Test
+    @DisplayName("Cant guess when round is done")
+    void guessRoundDone(){
+
+        WordService wordService = mock(WordService.class);
+        GameRepository gameRepository = mock(GameRepository.class);
+        GameService gameService = new GameService(gameRepository,wordService);
+
+        Game game = new Game("WOORD");
+        game.guess("WOORD");
+
+        when(gameRepository.getGameById(anyInt())).thenReturn(Optional.of(game));
+
+        assertThrows(RuntimeException.class, () -> gameService.guess(1, ""));
+    }
+
 }

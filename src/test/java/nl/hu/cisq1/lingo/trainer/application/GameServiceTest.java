@@ -110,7 +110,7 @@ class GameServiceTest {
 
         when(gameRepository.getGameById(anyInt())).thenReturn(Optional.of(game));
 
-        assertThrows(RuntimeException.class, () -> gameService.guess(1, ""));
+        assertThrows(RuntimeException.class, () -> gameService.guess(1, "BAARD"));
     }
 
 }

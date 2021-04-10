@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @Import(CiTestConfiguration.class)
-public class GameServiceIntegrationTest {
+class GameServiceIntegrationTest {
 
     @Autowired
     private GameService gameService;

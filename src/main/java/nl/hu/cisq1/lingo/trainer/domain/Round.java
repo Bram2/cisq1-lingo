@@ -1,5 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.exception.LingoGameException;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class Round {
             giveHint();
         }
         else
-            throw new RuntimeException("Round is done");
+            throw new LingoGameException("Round is done");
 
     }
 

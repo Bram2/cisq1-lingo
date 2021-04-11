@@ -98,5 +98,12 @@ public class Feedback {
         return marks.stream().noneMatch(m -> m.equals(INVALID));
     }
 
-
+    @Override
+    public String toString() {
+        return "Feedback{" +
+                "attempt='" + attempt + '\'' +
+                ", marks=" + marks +
+                ", hint=" + hint +
+                '}';
+    }
 }

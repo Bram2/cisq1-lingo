@@ -32,7 +32,8 @@ public class GameService {
 
     public Progress guess(int id, String attempt){
         Game game = getGame(id);
-        game.guess(attempt.toUpperCase());
+
+        game.guess(attempt);
 
         gameRepository.save(game);
         return getProgress(game);

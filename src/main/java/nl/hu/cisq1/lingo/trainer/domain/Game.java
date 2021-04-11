@@ -31,7 +31,7 @@ public class Game {
     public void guess(String attempt){
 
         if(gameState != GameState.PLAYING)
-            throw new LingoGameException("Currently not playing a round.");
+            throw new LingoGameException("Currently not playing a round");
 
         Round round = rounds.get(rounds.size() - 1);
 
@@ -48,7 +48,7 @@ public class Game {
 
     public void startRound(String word){
         if(gameState != GameState.WAITING_FOR_ROUND)
-            throw new LingoGameException("Not allowed to start a new round.");
+            throw new LingoGameException("Not allowed to start a new round");
 
         this.rounds.add((new Round(word)));
         gameState = GameState.PLAYING;

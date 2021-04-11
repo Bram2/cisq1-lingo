@@ -106,6 +106,7 @@
                         <configuration>
                             <excludes>
                                 <exclude>**/LingoApplication.*</exclude>
+                                <exclude>**/trainer/domain/exception/ControllerAdvisor.*</exclude>
                             </excludes>
                         </configuration>
                     </execution>
@@ -122,17 +123,17 @@
                                         <limit>
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.70</minimum>
+                                            <minimum>0.90</minimum>
                                         </limit>
                                         <limit>
                                             <counter>BRANCH</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.70</minimum>
+                                            <minimum>0.90</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>5</maximum>
+                                            <maximum>0</maximum>
                                         </limit>
                                     </limits>
                                 </rule>

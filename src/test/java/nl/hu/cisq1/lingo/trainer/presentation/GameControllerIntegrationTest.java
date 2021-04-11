@@ -2,8 +2,6 @@ package nl.hu.cisq1.lingo.trainer.presentation;
 
 import com.jayway.jsonpath.JsonPath;
 import nl.hu.cisq1.lingo.CiTestConfiguration;
-import nl.hu.cisq1.lingo.trainer.data.GameRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,8 +14,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @Import(CiTestConfiguration.class)
@@ -81,7 +79,8 @@ class GameControllerIntegrationTest {
                 .get("/game/{id}", gameID);
 
         mockMvc.perform(request)
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(gameID));
     }
 
     @Test

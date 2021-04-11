@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.exception.LingoGameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -60,8 +61,7 @@ class GameTest {
 
         game.guess("WOORD");
 
-        assertThrows(RuntimeException.class, () -> game.guess("BAARD"));
-
+        assertThrows(LingoGameException.class, () -> game.guess("BAARD"));
     }
 
     @Test
@@ -69,7 +69,7 @@ class GameTest {
     void stillPlayingNewRound(){
         Game game = new Game("WOORD");
 
-        assertThrows(RuntimeException.class, () -> game.startRound("BAARD"));
+        assertThrows(LingoGameException.class, () -> game.startRound("BAARD"));
     }
 
     @Test
@@ -81,7 +81,6 @@ class GameTest {
         game.startRound("BAARD");
 
         assertEquals(2, game.getRounds().size());
-
     }
 
 }

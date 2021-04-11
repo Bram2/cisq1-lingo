@@ -151,6 +151,24 @@ class GameServiceTest {
         assertEquals(List.of(ABSENT, ABSENT, ABSENT, CORRECT, CORRECT), progress.getFeedback());
     }
 
+    @Test
+    @DisplayName("Get game returns game progress")
+    void getGame(){
+
+        WordService wordService = mock(WordService.class);
+        GameRepository gameRepository = mock(GameRepository.class);
+        GameService gameService = new GameService(gameRepository,wordService);
+
+        Game game = new Game("WOORD");
+
+        when(gameRepository.getGameById(anyInt())).thenReturn(Optional.of(game));
+
+        Progress progress = gameService.getGameProgress(1);
+
+        assertEquals(List.of("W",".",".",".","."), progress.getLastHint());
+        assertEquals(GameState.PLAYING, progress.getGameState());
+    }
+
 
 
 }

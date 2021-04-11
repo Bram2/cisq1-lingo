@@ -1,6 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.words.domain.Word;
+import nl.hu.cisq1.lingo.trainer.domain.exception.LingoGameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RoundTest {
 
@@ -58,7 +59,7 @@ class RoundTest {
         Round round = new Round("WOORD");
         round.guess("WOORD");
 
-        assertThrows(RuntimeException.class, () -> round.guess("WOORD"));
+        assertThrows(LingoGameException.class, () -> round.guess("WOORD"));
     }
 
     @ParameterizedTest
@@ -93,7 +94,7 @@ class RoundTest {
         round.guess("WEZEN");
         round.guess("WEVEN");
 
-        assertThrows(RuntimeException.class, ()-> round.guess("WOORD"));
+        assertThrows(LingoGameException.class, ()-> round.guess("WOORD"));
     }
 
 

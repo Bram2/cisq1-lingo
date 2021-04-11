@@ -98,24 +98,5 @@ public class Feedback {
         return marks.stream().noneMatch(m -> m.equals(INVALID));
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Feedback feedback = (Feedback) o;
-        return Objects.equals(attempt, feedback.attempt) && Objects.equals(marks, feedback.marks);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(attempt, marks);
-    }
-
-    @Override
-    public String toString() {
-        return "Feedback{" +
-                "attempt='" + attempt + '\'' +
-                ", marks=" + marks +
-                '}';
-    }
 }

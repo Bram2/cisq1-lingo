@@ -30,7 +30,7 @@ class GameControllerIntegrationTest {
     private int gameID;
 
     @BeforeEach
-    void initialize() throws Exception {
+    void initializeGame() throws Exception {
 
         MvcResult result = mockMvc.perform(
                 MockMvcRequestBuilders
@@ -70,6 +70,29 @@ class GameControllerIntegrationTest {
                 .andExpect(jsonPath("$.lastHint").isArray())
                 .andExpect(jsonPath("$.feedback").isArray())
                 .andExpect(jsonPath("$.roundNumber").value(1));
+    }
+
+
+    @Test
+    @DisplayName("Get a game with a valid ID")
+    void getGame() throws Exception {
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/game/{id}", gameID);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Get a game with an invalid ID")
+    void getGameInvalidID() throws Exception {
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/game/9999", gameID);
+
+        mockMvc.perform(request)
+                .andExpect(status().isNotFound());
     }
 
 

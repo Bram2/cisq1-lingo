@@ -4,6 +4,7 @@ import nl.hu.cisq1.lingo.trainer.data.GameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Game;
 import nl.hu.cisq1.lingo.trainer.domain.GameState;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
+import nl.hu.cisq1.lingo.trainer.domain.exception.LingoGameException;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,10 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static nl.hu.cisq1.lingo.trainer.domain.Mark.ABSENT;
+import static nl.hu.cisq1.lingo.trainer.domain.Mark.CORRECT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class GameServiceTest {
@@ -94,7 +98,7 @@ class GameServiceTest {
 
         when(gameRepository.getGameById(anyInt())).thenReturn(Optional.of(game));
 
-        assertThrows(RuntimeException.class, () -> gameService.newRound(1));
+        assertThrows(LingoGameException.class, () -> gameService.newRound(1));
     }
 
     @Test
@@ -110,7 +114,43 @@ class GameServiceTest {
 
         when(gameRepository.getGameById(anyInt())).thenReturn(Optional.of(game));
 
-        assertThrows(RuntimeException.class, () -> gameService.guess(1, "BAARD"));
+        assertThrows(LingoGameException.class, () -> gameService.guess(1, "BAARD"));
     }
+
+    @Test
+    @DisplayName("Guessing a word adds score correctly")
+    void addScore(){
+
+        WordService wordService = mock(WordService.class);
+        GameRepository gameRepository = mock(GameRepository.class);
+        GameService gameService = new GameService(gameRepository,wordService);
+
+        Game game = new Game("WOORD");
+
+        when(gameRepository.getGameById(anyInt())).thenReturn(Optional.of(game));
+
+        Progress progress = gameService.guess(1,"WOORD");
+
+        assertEquals(25, progress.getScore());
+    }
+
+    @Test
+    @DisplayName("Guessing a word gives correct amount of feedback")
+    void correctFeedback(){
+
+        WordService wordService = mock(WordService.class);
+        GameRepository gameRepository = mock(GameRepository.class);
+        GameService gameService = new GameService(gameRepository,wordService);
+
+        Game game = new Game("WOORD");
+
+        when(gameRepository.getGameById(anyInt())).thenReturn(Optional.of(game));
+
+        Progress progress = gameService.guess(1,"PAARD");
+
+        assertEquals(List.of(ABSENT, ABSENT, ABSENT, CORRECT, CORRECT), progress.getFeedback());
+    }
+
+
 
 }

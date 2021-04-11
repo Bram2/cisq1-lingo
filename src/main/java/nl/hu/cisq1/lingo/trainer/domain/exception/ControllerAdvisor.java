@@ -41,6 +41,15 @@ public class ControllerAdvisor {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(GameNotFoundException.class)
+    public ResponseEntity<Object> handleGameNotFound() {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("status code", HttpStatus.NOT_FOUND.toString());
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
 
 
 

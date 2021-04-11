@@ -4,6 +4,7 @@ import nl.hu.cisq1.lingo.trainer.data.GameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Game;
 import nl.hu.cisq1.lingo.trainer.domain.Mark;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
+import nl.hu.cisq1.lingo.trainer.domain.exception.GameNotFoundException;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,10 @@ public class GameService {
     public GameService(GameRepository gameRepository, WordService wordService) {
         this.gameRepository = gameRepository;
         this.wordService = wordService;
+    }
+
+    public Progress getGameProgress(int id){
+        return getProgress(getGame(id));
     }
 
     public Progress startGame(){
@@ -57,7 +62,7 @@ public class GameService {
     }
 
     public Game getGame(int id){
-        return gameRepository.getGameById(id).orElseThrow(RuntimeException::new);
+        return gameRepository.getGameById(id).orElseThrow(GameNotFoundException::new);
     }
 
     public Progress getProgress(Game game){

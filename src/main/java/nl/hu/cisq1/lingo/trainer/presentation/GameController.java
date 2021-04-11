@@ -16,6 +16,12 @@ public class GameController {
         this.service = service;
     }
 
+
+    @GetMapping("/{id}")
+    public Progress getGame(@PathVariable int id){
+        return service.getGameProgress(id);
+    }
+
     @PostMapping
     public Progress startGame(){
         return service.startGame();
